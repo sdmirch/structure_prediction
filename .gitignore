@@ -1,4 +1,4 @@
 data/
 *Test*
-
+*.pyc
 .ipynb_checkpoints/
