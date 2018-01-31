@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-def clean_dataframe(df_raw, feature_type="cell_nuc_only"):
+def reduce_dataframe(df_raw, feature_type="cell_nuc_only"):
     """
     Removes columns from raw dataframe, removal specified by feature_type,
     and returns reduced dataframe.
@@ -30,6 +30,31 @@ def clean_dataframe(df_raw, feature_type="cell_nuc_only"):
     df = df_raw.drop(drop_columns, axis=1)
 
     return df
+
+def clean_dataframe(df_reduced, feature_type="cell_nuc_only"):
+    """
+    Removes rows that have NaNs in all columns (based on first column),
+    and replaces select columns' NaNs with the mean of the column.
+    Hard coded for each scenario.
+
+    Args:
+        df (pandas.DataFrame): Dataframe with reduced data.
+        feature_type (str): String referring to cleaning specification
+
+    Returns:
+        df (pandas.DataFrame): Cleaned dataframe.
+    """
+
+    if feature_type == "cell_nuc_only":
+        # Remove rows that have NaNs in all columns, using first column as indicator.
+        df = df_reduced[np.isfinite(df_reduced['feat_nuc_region_mean_px'])]
+
+        # Replace NaNs in specific columns with the column mean.
+        df['feat_nuc_obj_mean_edge_len'].fillna((df['feat_nuc_obj_mean_edge_len'].mean()), inplace=True)
+        df['feat_nuc_obj_std_edge_len'].fillna((df['feat_nuc_obj_std_edge_len'].mean()), inplace=True)
+
+    return df
+
 
 def split_dataframe(df, feature_type="cell_nuc_only"):
         """
