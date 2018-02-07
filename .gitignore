@@ -4,3 +4,4 @@ models/
 *Test*
 *.pyc
 .ipynb_checkpoints/
+.DS_Store
