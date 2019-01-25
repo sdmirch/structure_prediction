@@ -12,22 +12,25 @@ After feature reduction and imputation, different classification models are trai
 
 Gradient Boosting (left) and Random Guessing (right) Classification Reports:
 
-![XGBoostClassificationReport](/img/XGBoostClassificationReport)![RandomGuessClassificationReport](/img/RandomGuessClassificationReport.png)
+![XGBoostClassificationReport](/img/XGBoostClassificationReport.png)![RandomGuessClassificationReport](/img/RandomGuessClassificationReport.png)
 
 To confirm that prediction is possible, a distribution of the accuracy for the random guess model by guessing the labels for the data 10,000 times is plotted below in red; the blue line shows the accuracy of the logistic regression. The difference between the random guess and the accuracy of the logistic regression is statistically significant.
 
-
+![GuessHistogram](/img/GuessHistogram.png)
 
 ## Evaluation:
 Now that it can be shown with confidence that prediction is possible, inference based on the feature importances and coefficients from the trained models can provide insight into which features aid in the protein structure prediction. The feature importances from the xgboost gradient boosted classifier, which achieved the lowest cross entropy loss, are shown below.
 
+![FeatureImportance](/img/FeatureImportance.png)
 
 The first three top features importances are used to understand clusters of protein structures; the two scatter plots show that the first few features do not show easily understandable or interpretable clusters of proteins, even though they provide the most information about the labels.
 
+![CellPolarity-NucZAffinity1](/img/CellPolarity-NucZAffinity1.png)![CellPolarity-NucZAffinity2](/img/CellPolarity-NucZAffinity2.png)
 
 Logistic regression modeling techniques are selected for further analysis due to their interpretability. Eleven one-versus-all logistic regression models are trained so that structure-specific coefficients can be analyzed; the positive label is a specific protein structure, and the negative label is given to the remaining 10 structures. The two features with the largest resulting coefficients are used in scatter plots to show clusters of red positive labels on top of the black negative labels. The coefficients with the highest values may indicate a cluster of ZO1 in the two dimensions shown, but often, the first two coefficients are insufficient to demonstrate a noticeable clustering for Beta Actin and ST6GAL1.
 
-
+![ScatterplotZO1](/img/ScatterplotZO1.png)![ScatterplotBetaActin](/img/ScatterplotBetaActin.png)
+![ScatterplotST6GAL1](/img/ScatterplotST6GAL1.png)
 
 ## Conclusions:
 Prediction of proteins was possible indicating batch effects in the imaging pipeline are likely affecting the structure and nucleus of the cell.
